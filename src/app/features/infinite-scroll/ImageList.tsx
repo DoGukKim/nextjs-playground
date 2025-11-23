@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { fetchImages, type Images } from "./api";
+import { type Images } from "./schema";
 import ImageItem from "./ImageItem";
+import { fetchImages } from "./api";
 
 const ImageList = () => {
   const [images, setImages] = useState<Images>([]);

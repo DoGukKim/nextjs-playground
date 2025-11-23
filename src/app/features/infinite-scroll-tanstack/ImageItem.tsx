@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Image as ImageType } from "./api";
+import type { Image as ImageType } from "./schema";
 
 interface ImageItemProps {
   image: ImageType;
