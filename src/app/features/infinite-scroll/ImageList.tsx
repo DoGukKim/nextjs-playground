@@ -4,11 +4,11 @@ import { fetchImages, type Images } from "./api";
 import ImageItem from "./ImageItem";
 
 const ImageList = () => {
-  const triggerRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<Images>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const pageRef = useRef(1);
-  const isLoadingRef = useRef(false);
+  const pageRef = useRef<number>(1);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const isLoadingRef = useRef<boolean>(false);
 
   useEffect(() => {
     const onIntersect = async () => {
