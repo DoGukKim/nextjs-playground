@@ -41,6 +41,8 @@ const useIntersectionObserver = <E extends Element = Element>({
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
+      if (entries.length === 0) return;
+
       const entry = entries[0];
 
       setEntry(entry);
