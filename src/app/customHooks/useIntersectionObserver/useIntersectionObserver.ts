@@ -36,7 +36,7 @@ const useIntersectionObserver = <E extends Element = Element>({
   );
 
   const onChangeEvent = useEffectEvent((entry: IntersectionObserverEntry) => {
-    onChange?.(entry);
+    if (onChange) onChange(entry);
   });
 
   useEffect(() => {
