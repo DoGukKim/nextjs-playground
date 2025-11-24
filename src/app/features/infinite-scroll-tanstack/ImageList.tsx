@@ -7,31 +7,40 @@ import { useImagesInfiniteQuery } from "./query";
 const ImageList = () => {
   const triggerRef = useRef<HTMLDivElement>(null);
   const {
-    status,
     data,
     isLoading,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
+    isFetching,
+    isSuccess,
   } = useImagesInfiniteQuery({ page: 1, limit: 30 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        if (entry.isIntersecting && hasNextPage && !isFetching) {
           fetchNextPage();
         }
       },
       { threshold: 0.1 }
     );
 
+    if (triggerRef.current) {
+      observer.observe(triggerRef.current);
+    }
+
     return () => {
       observer.disconnect();
     };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [fetchNextPage, hasNextPage, isFetching]);
 
-  const allImages = data?.pages.flatMap((page) => page) ?? [];
+  if (!isSuccess) {
+    return <div>failed</div>;
+  }
+
+  const allImages = data.pages.flatMap((page) => page) ?? [];
 
   return (
     <div role="feed" aria-busy={isLoading} aria-label="이미지 피드">
@@ -46,9 +55,11 @@ const ImageList = () => {
         ))}
       </ul>
 
-      {status === "success" && !isFetchingNextPage && (
-        <div ref={triggerRef} className="h-px" aria-hidden="true" />
-      )}
+      <div
+        ref={triggerRef}
+        className="h-px border-b border-red-500"
+        aria-hidden="true"
+      />
 
       {isFetchingNextPage && (
         <div role="status" aria-live="polite">

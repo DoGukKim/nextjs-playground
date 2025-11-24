@@ -3,7 +3,7 @@ import { fetchImages } from "./api";
 
 export const INFINITE_SCROLL_QUERY_KEYS = {
   base: ["infinite-scroll"],
-  list: (page: number) => [...INFINITE_SCROLL_QUERY_KEYS.base, "list", page],
+  list: () => [...INFINITE_SCROLL_QUERY_KEYS.base, "list"],
 } as const;
 
 export const useImagesInfiniteQuery = ({
@@ -14,7 +14,7 @@ export const useImagesInfiniteQuery = ({
   limit: number;
 }) => {
   return useInfiniteQuery({
-    queryKey: INFINITE_SCROLL_QUERY_KEYS.list(page),
+    queryKey: INFINITE_SCROLL_QUERY_KEYS.list(),
     queryFn: ({ pageParam }) => fetchImages({ page: pageParam, limit }),
     getNextPageParam: (lastPage, pages) =>
       lastPage.length > 0 ? pages.length + 1 : undefined,
