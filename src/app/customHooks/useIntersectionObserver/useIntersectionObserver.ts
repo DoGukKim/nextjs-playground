@@ -2,7 +2,7 @@
 
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 
-export interface UseIntersectionObserverProps {
+export interface UseIntersectionObserverParams {
   options?: IntersectionObserverInit & { triggerOnce?: boolean };
   onChange?: (entry: IntersectionObserverEntry) => void;
 }
@@ -16,7 +16,7 @@ export interface UseIntersectionObserverReturn<E> {
 const useIntersectionObserver = <E extends Element = Element>({
   options,
   onChange,
-}: UseIntersectionObserverProps): UseIntersectionObserverReturn<E> => {
+}: UseIntersectionObserverParams): UseIntersectionObserverReturn<E> => {
   const ref = useRef<E>(null);
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
   const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
