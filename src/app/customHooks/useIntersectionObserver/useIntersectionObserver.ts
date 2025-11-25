@@ -21,10 +21,7 @@ const useIntersectionObserver = <E extends Element = Element>({
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
   const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
 
-  const root = options?.root;
-  const rootMargin = options?.rootMargin;
-  const threshold = options?.threshold;
-  const triggerOnce = options?.triggerOnce;
+  const { root, rootMargin, threshold, triggerOnce } = options ?? {};
 
   const observerOptions = useMemo<IntersectionObserverInit>(
     () => ({
@@ -36,7 +33,7 @@ const useIntersectionObserver = <E extends Element = Element>({
   );
 
   const onChangeEvent = useEffectEvent((entry: IntersectionObserverEntry) => {
-    if (onChange) onChange(entry);
+    if (typeof onChange === "function") onChange(entry);
   });
 
   useEffect(() => {
