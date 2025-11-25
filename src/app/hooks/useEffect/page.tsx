@@ -2,7 +2,7 @@
 
 import { useEffect, useEffectEvent, useState } from "react";
 
-const useEffectPage = () => {
+const UseEffectPage = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = useEffectEvent((e: MouseEvent) => {
@@ -30,4 +30,4 @@ const useEffectPage = () => {
   );
 };
 
-export default useEffectPage;
+export default UseEffectPage;

@@ -2,7 +2,7 @@
 
 import { useEffect, useEffectEvent, useState } from "react";
 
-const useEffectEventPage = () => {
+const UseEffectEventPage = () => {
   const [userId, setUserId] = useState("user-1");
   const [logLevel, setLogLevel] = useState<"info" | "error">("info");
   const [activityCount, setActivityCount] = useState(0);
@@ -81,4 +81,4 @@ const useEffectEventPage = () => {
   );
 };
 
-export default useEffectEventPage;
+export default UseEffectEventPage;
