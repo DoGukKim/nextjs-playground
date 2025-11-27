@@ -1,5 +1,6 @@
-import NormalForm from "./NormalForm";
-import NormalFormWithObject from "./NormalFormWithObject";
+import NormalForm from "./Form";
+import NormalFormWithObject from "./FormWithObject";
+import FormWithUseReducer from "./FormWithUseReducer";
 
 const ControlledFormPage = () => {
   return (
@@ -8,6 +9,7 @@ const ControlledFormPage = () => {
       <div className="h-4" />
       <NormalFormWithObject />
       <div className="h-4" />
+      <FormWithUseReducer />
     </div>
   );
 };
