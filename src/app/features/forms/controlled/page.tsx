@@ -6,9 +6,7 @@ const ControlledFormPage = () => {
   return (
     <div>
       <NormalForm />
-      <div className="h-4" />
       <NormalFormWithObject />
-      <div className="h-4" />
       <FormWithUseReducer />
     </div>
   );
