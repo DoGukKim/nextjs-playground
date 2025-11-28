@@ -3,14 +3,14 @@
 import { useRef } from "react";
 
 const UncontrolledForm = () => {
-  const formRef = useRef<HTMLFormElement>(null);
   const rangeValueRef = useRef<HTMLSpanElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+
     e.preventDefault();
-    if (!formRef.current) return;
-    console.log(formRef.current);
-    const formData = new FormData(formRef.current);
+    const formData = new FormData(form);
+    console.log(formData.getAll("cars"));
     const data = Object.fromEntries(formData.entries());
     console.log(data);
     alert("제출되었습니다.");
@@ -18,7 +18,7 @@ const UncontrolledForm = () => {
 
   return (
     <div>
-      <form ref={formRef} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="space-y-2">
           <label
             htmlFor="username"
@@ -41,7 +41,13 @@ const UncontrolledForm = () => {
             2~20자 사이로 입력하세요 (minLength, maxLength)
           </p>
         </div>
-
+        <label htmlFor="cars">Choose a car:</label>
+        <select name="cars" id="cars" multiple>
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
         <div className="space-y-2">
           <label
             htmlFor="satisfaction"
