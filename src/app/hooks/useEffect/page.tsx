@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useState } from "react";
 
 const UseEffectPage = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = useEffectEvent((e: MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent) => {
     setPosition({ x: e.clientX, y: e.clientY });
-  });
+  };
 
   useEffect(() => {
     document.addEventListener("mousemove", handleMouseMove);
