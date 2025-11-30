@@ -1,7 +1,6 @@
 "use client";
 import { useSyncExternalStore } from "react";
 
-// 온라인/오프라인 상태를 구독하는 함수
 const subscribe = (callback: () => void) => {
   window.addEventListener("online", callback);
   window.addEventListener("offline", callback);
@@ -11,12 +10,10 @@ const subscribe = (callback: () => void) => {
   };
 };
 
-// 클라이언트의 현재 온라인 상태를 반환
 const getSnapshot = () => {
   return navigator.onLine;
 };
 
-// 서버 사이드 렌더링 시 기본값 (항상 온라인으로 가정)
 const getServerSnapshot = () => true;
 
 const UseSyncExternalStorePage = () => {
