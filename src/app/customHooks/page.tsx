@@ -1,3 +1,5 @@
+"use client";
+
 const CustomHooksPage = () => {
   return <div>CustomHooksPage</div>;
 };
