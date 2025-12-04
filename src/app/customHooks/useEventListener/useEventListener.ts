@@ -1,30 +1,66 @@
 "use client";
-import { useEffect, useEffectEvent } from "react";
+import { RefObject, useEffect, useEffectEvent } from "react";
 
-const useEventListener = <E extends keyof WindowEventMap>(
-  event: E,
+export function useEventListener<E extends keyof WindowEventMap>(
+  eventName: E,
   handler: (event: WindowEventMap[E]) => void,
-  element?: HTMLElement | Window | Document | null
-) => {
-  const handleEvent = useEffectEvent((event: WindowEventMap[E]) =>
-    handler(event)
-  );
+  element?: undefined,
+  options?: boolean | AddEventListenerOptions
+): void;
 
+export function useEventListener<E extends keyof DocumentEventMap>(
+  eventName: E,
+  handler: (event: DocumentEventMap[E]) => void,
+  element: RefObject<Document> | Document | null,
+  options?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener<E extends keyof MediaQueryListEventMap>(
+  eventName: E,
+  handler: (event: MediaQueryListEventMap[E]) => void,
+  element: RefObject<MediaQueryList> | MediaQueryList | null,
+  options?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener<E extends keyof HTMLElementEventMap>(
+  eventName: E,
+  handler: (event: HTMLElementEventMap[E]) => void,
+  element: RefObject<HTMLElement> | HTMLElement | null,
+  options?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener<
+  E extends keyof SVGElementEventMap,
+  T extends SVGElement = SVGElement
+>(
+  eventName: E,
+  handler: (event: SVGElementEventMap[E]) => void,
+  element: RefObject<T | null> | T | null,
+  options?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener(
+  eventName: string,
+  handler: (event: Event) => void,
+  element?: RefObject<EventTarget | null> | EventTarget | null | undefined,
+  options?: boolean | AddEventListenerOptions
+) {
+  const handleEvent = useEffectEvent((e: Event) => handler(e));
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const targetElement =
       element === undefined
-        ? typeof window !== "undefined"
-          ? window
-          : null
+        ? window
+        : element && "current" in element
+        ? element.current
         : element;
 
     if (!targetElement) return;
 
-    targetElement.addEventListener(event, handleEvent as EventListener);
-    return () => {
-      targetElement.removeEventListener(event, handleEvent as EventListener);
-    };
-  }, [event, element]);
-};
+    targetElement.addEventListener(eventName, handleEvent, options);
 
-export default useEventListener;
+    return () =>
+      targetElement.removeEventListener(eventName, handleEvent, options);
+  }, [eventName, element, options]);
+}
