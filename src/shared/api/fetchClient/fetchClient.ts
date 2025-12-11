@@ -7,7 +7,11 @@ import {
   parseResponse,
 } from "./helpers";
 import HookRunner from "./hookRunner";
-import { FetchClientConfig, FetchClientRequestConfig } from "./types";
+import {
+  FetchClientConfig,
+  FetchClientRequestConfig,
+  MergedFetchClientConfig,
+} from "./types";
 
 class FetchClient {
   private readonly config: FetchClientConfig;
@@ -27,18 +31,21 @@ class FetchClient {
     requestConfig: FetchClientRequestConfig<TBody>
   ): Promise<TResponse> {
     const baseConfig = mergeConfig<TBody>(this.config, requestConfig);
-    const hookConfig = await this.hooks.runBeforeRequest<TBody>(baseConfig);
-    const {
-      baseUrl,
-      body,
-      responseType = "json",
-      params,
-      qsStringifyOptions,
-      headers,
-      ...requestInit
-    } = hookConfig;
+    let hookConfig: MergedFetchClientConfig<TBody> = baseConfig;
 
     try {
+      hookConfig = await this.hooks.runBeforeRequest<TBody>(baseConfig);
+
+      const {
+        baseUrl,
+        body,
+        responseType = "json",
+        params,
+        qsStringifyOptions,
+        headers,
+        ...requestInit
+      } = hookConfig;
+
       const fullUrl = buildUrl({
         url,
         baseUrl,
