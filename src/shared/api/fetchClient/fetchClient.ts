@@ -96,7 +96,7 @@ class FetchClient {
     });
   }
 
-  async post<TResponse = unknown, TBody = unknown>(
+  async post<TBody, TResponse = unknown>(
     url: string,
     body: TBody,
     config?: Omit<FetchClientRequestConfig<TBody>, "body" | "method">
@@ -108,7 +108,7 @@ class FetchClient {
     });
   }
 
-  async put<TResponse = unknown, TBody = unknown>(
+  async put<TBody, TResponse = unknown>(
     url: string,
     body: TBody,
     config?: Omit<FetchClientRequestConfig<TBody>, "body" | "method">
@@ -120,7 +120,7 @@ class FetchClient {
     });
   }
 
-  async patch<TResponse = unknown, TBody = unknown>(
+  async patch<TBody, TResponse = unknown>(
     url: string,
     body: TBody,
     config?: Omit<FetchClientRequestConfig<TBody>, "body" | "method">
